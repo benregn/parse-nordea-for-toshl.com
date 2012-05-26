@@ -52,10 +52,18 @@ def cleanup_data(row)
   end
 end
 
+def parse_date(row, rows)
+  index = row["Name"].index("Den")
+  date = row["Name"][index+3..-1] # plus 3 to not include "Den"
+  row["Name"] = row["Name"][0..index-1].rstrip!
+  row.merge!("Date" => date)
+end
+
 def main()
   rows = prepare_CSV
   rows.each do |row|
     cleanup_data(row)
+    parse_date row, rows
   end
   puts rows
 end
