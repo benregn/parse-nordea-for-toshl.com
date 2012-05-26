@@ -23,12 +23,6 @@ def prepare_CSV
         row.delete column
       end
 
-      row["Name"] = row["Name"][13..-1] # remove "Electron køb,"
-
-      if row["Name"].start_with?(" . ")
-        row["Name"] = row["Name"][3..-1]
-      end
-
       row = row.to_hash
       rows.push row
     else
@@ -46,5 +40,20 @@ def change_key_name(hash, switch_keys)
   return hash
 end
 
-puts prepare_CSV
-# p fix_keys(prepare_CSV)
+def cleanup_data(rows)
+  rows.each do |row|
+    row["Name"] = row["Name"][13..-1] # remove "Electron køb,"
+
+    if row["Name"].start_with?(" . ")
+      row["Name"] = row["Name"][3..-1]
+    end
+
+    if row["Amount"].start_with?("-")
+      row["Amount"] = row["Amount"][1..-1]
+    end
+  end
+end
+
+rows = prepare_CSV
+cleanup_data(rows)
+puts rows
