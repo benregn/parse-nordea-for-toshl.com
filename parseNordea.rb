@@ -40,20 +40,24 @@ def change_key_name(hash, switch_keys)
   return hash
 end
 
-def cleanup_data(rows)
-  rows.each do |row|
-    row["Name"] = row["Name"][13..-1] # remove "Electron køb,"
+def cleanup_data(row)
+  row["Name"] = row["Name"][13..-1] # remove "Electron køb,"
 
-    if row["Name"].start_with?(" . ")
-      row["Name"] = row["Name"][3..-1]
-    end
+  if row["Name"].start_with?(" . ")
+    row["Name"] = row["Name"][3..-1]
+  end
 
-    if row["Amount"].start_with?("-")
-      row["Amount"] = row["Amount"][1..-1]
-    end
+  if row["Amount"].start_with?("-")
+    row["Amount"] = row["Amount"][1..-1]
   end
 end
 
-rows = prepare_CSV
-cleanup_data(rows)
-puts rows
+def main()
+  rows = prepare_CSV
+  rows.each do |row|
+    cleanup_data(row)
+  end
+  puts rows
+end
+
+main
