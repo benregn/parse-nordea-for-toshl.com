@@ -23,7 +23,12 @@ def prepare_CSV
         row.delete column
       end
 
-      row["Name"] = row["Name"][13..-1]
+      row["Name"] = row["Name"][13..-1] # remove "Electron køb,"
+
+      if row["Name"].start_with?(" . ")
+        row["Name"] = row["Name"][3..-1]
+      end
+
       row = row.to_hash
       rows.push row
     else
