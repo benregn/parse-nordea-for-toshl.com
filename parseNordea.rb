@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 # encoding: utf-8
 require 'CSV'
+require "formatador"
 
 #=========================================#
 # REMEMBER to save the CSV file as UTF-8! #
@@ -65,7 +66,8 @@ def main()
     cleanup_data(row)
     parse_date row, rows
   end
-  puts rows
+  # puts rows
+  Formatador.display_table rows
 end
 
 main
