@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 # encoding: utf-8
 require 'CSV'
+require 'json'
 require "formatador"
 
 #=========================================#
@@ -60,7 +61,13 @@ def parse_date(row, rows)
   row.merge!("Date" => date)
 end
 
+def read_tags(filename)
+  tag_file = File.read(filename)
+  tags = JSON.parse(tag_file)
+end
+
 def main()
+  filename = "tags.json"
   rows = prepare_CSV
   rows.each do |row|
     cleanup_data(row)
