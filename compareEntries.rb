@@ -3,12 +3,12 @@ require "formatador"
 require "./parseNordea"
 require "./parseToshl"
 
-filename = "tags.json"
+tags_filename = "tags.json"
 nordea_rows = Nordea.prepare_CSV
 nordea_rows.each do |row|
   Nordea.cleanup_data row
   Nordea.parse_date row, nordea_rows
-  Nordea.match_tags filename, row
+  Nordea.match_tags tags_filename, row
 end
 nordea_rows.sort_by! { |hash| hash["Date"] }
 # p nordea_rows
