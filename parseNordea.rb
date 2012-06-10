@@ -66,11 +66,21 @@ def read_tags(filename)
   tags = JSON.parse(tag_file)
 end
 
+def match_tags(filename, row)
+  tags = read_tags(filename)
+  tags.each do |tag, value|
+    value.each do |v|
+      row["Name"].match(v) { row.merge!("Tag" => tag) }
+    end
+  end
+end
+
 filename = "tags.json"
 rows = prepare_CSV
 rows.each do |row|
   cleanup_data row
   parse_date row, rows
+  match_tags filename, row
 end
 # puts rows
 Formatador.display_table rows
