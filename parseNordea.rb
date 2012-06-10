@@ -85,4 +85,4 @@ rows.each do |row|
   match_tags filename, row
 end
 # puts rows
-Formatador.display_table rows
+Formatador.display_table rows, ["Amount", "Tag", "Date", "Name"]
