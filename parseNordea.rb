@@ -59,6 +59,11 @@ end
 def parse_date(row, rows)
   index = row["Name"].index("Den")
   date = row["Name"][index+3..-1].strip! # plus 3 to not include "Den"
+
+  if date.length > 5
+    date = date[0..4]
+  end
+
   row["Name"] = row["Name"][0..index-1].rstrip!
   row.merge!("Date" => date)
 end
