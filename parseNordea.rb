@@ -51,7 +51,10 @@ def cleanup_data(row)
     row["Amount"] = row["Amount"][1..-1]
   end
 
+  # convert to float to be able to round off
   row["Amount"] = row["Amount"].gsub(',', '.').to_f.round(1)
+  # convert back to string to be able to use Formatador's coloring
+  row["Amount"] = row["Amount"].to_s
 end
 
 def parse_date(row, rows)
