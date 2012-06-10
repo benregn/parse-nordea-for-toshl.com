@@ -7,9 +7,19 @@
         "STEAMPOWERED.COM",
         "DESURA"
     ],
-    "netto": "NETTO",
-    "nybro-pizzeria": "Nybro Kiosk",
-    "clothes": "STARTUPTHREADS",
-    "books": "WWW.ADLIBRIS.COM",
-    "humblebundle": "Humble Bundl"
+    "netto": [
+        "NETTO"
+    ],
+    "nybro-pizzeria": [
+        "Nybro Kiosk"
+    ],
+    "clothes": [
+        "STARTUPTHREADS"
+    ],
+    "books": [
+        "WWW.ADLIBRIS.COM"
+    ],
+    "humblebundle": [
+        "Humble Bundl"
+    ]
 }
