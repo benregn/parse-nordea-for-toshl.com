@@ -14,8 +14,6 @@ require "./helpers"
 # (optionally the time as well), and the amount
 # After that maybe assign specific tags
 
-include Helpers
-
 def prepare_CSV
   rows = []
   columns_to_remove = ["Bogført", "Rentedato", "Saldo"]

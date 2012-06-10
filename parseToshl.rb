@@ -2,8 +2,6 @@
 require 'CSV'
 require "./helpers"
 
-include Helpers
-
 def prepare_CSV
   rows = []
   columns_to_remove = ["Income amount", "Currency", "Description"]
