@@ -81,4 +81,16 @@ module Nordea
       end
     end
   end
+
+  def self.prepare_rows
+    tags_filename = "tags.json"
+    rows = prepare_CSV
+
+    rows.each do |row|
+      Nordea.cleanup_data row
+      Nordea.parse_date row, rows
+      Nordea.match_tags tags_filename, row
+    end
+    rows.sort_by! { |hash| hash["Date"] }
+  end
 end
