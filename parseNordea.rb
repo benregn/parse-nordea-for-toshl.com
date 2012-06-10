@@ -4,6 +4,7 @@ require 'CSV'
 require 'json'
 require 'date'
 require "formatador"
+require "./helpers"
 
 #=========================================#
 # REMEMBER to save the CSV file as UTF-8! #
@@ -13,13 +14,15 @@ require "formatador"
 # (optionally the time as well), and the amount
 # After that maybe assign specific tags
 
+include Helpers
+
 def prepare_CSV
   rows = []
   columns_to_remove = ["Bogført", "Rentedato", "Saldo"]
   switch_keys = { "Tekst" => "Name", "Beløb" => "Amount" }
 
   CSV.foreach("./nordea.csv", col_sep: ';', headers: true) do |row|
-    row = change_key_name row, switch_keys
+    row = Helpers.change_key_name row, switch_keys
 
     if row["Name"].match("Den")
       columns_to_remove.each do |column|
@@ -33,14 +36,6 @@ def prepare_CSV
     end
   end
   return rows
-end
-
-def change_key_name(hash, switch_keys)
-  switch_keys.each do |old_key, new_key|
-    hash[new_key] = hash[old_key]
-    hash.delete old_key
-  end
-  return hash
 end
 
 def cleanup_data(row)
