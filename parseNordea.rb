@@ -66,15 +66,11 @@ def read_tags(filename)
   tags = JSON.parse(tag_file)
 end
 
-def main()
-  filename = "tags.json"
-  rows = prepare_CSV
-  rows.each do |row|
-    cleanup_data(row)
-    parse_date row, rows
-  end
-  # puts rows
-  Formatador.display_table rows
+filename = "tags.json"
+rows = prepare_CSV
+rows.each do |row|
+  cleanup_data row
+  parse_date row, rows
 end
-
-main
+# puts rows
+Formatador.display_table rows
