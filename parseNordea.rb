@@ -58,12 +58,13 @@ module Nordea
     index = row["Name"].index("Den")
     date = row["Name"][index+3..-1].strip! # plus 3 to not include "Den"
 
+    # remove the time from date
     if date.length > 5
       date = date[0..4]
     end
 
     row["Name"] = row["Name"][0..index-1].rstrip!
-    date = Date.strptime(date, "%d.%m")
+    date = Date.strptime(date, "%d.%m") # to be able to sort by date
     row.merge!("Date" => date)
   end
 
@@ -75,7 +76,7 @@ module Nordea
   def self.match_tags(filename, row)
     tags = read_tags(filename)
     tags.each do |tag, value|
-      value.each do |v|
+      value.each do |v| # each value is an array
         row["Name"].match(v) { row.merge!("Tag" => tag) }
       end
     end
