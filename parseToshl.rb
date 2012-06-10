@@ -12,6 +12,8 @@ module Toshl
       row = Helpers.change_key_name row, switch_keys
       columns_to_remove.each { |column| row.delete column }
 
+      parse_date row
+
       row = row.to_hash
       if not row["Amount"].empty?
         # puts row
@@ -19,5 +21,9 @@ module Toshl
       end
     end
     return rows
+  end
+
+  def self.parse_date(row)
+    row["Date"] = Date.strptime(row["Date"])
   end
 end
