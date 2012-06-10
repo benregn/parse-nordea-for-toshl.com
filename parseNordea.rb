@@ -50,11 +50,13 @@ def cleanup_data(row)
     row["Name"] = row["Name"][3..-1]
   end
 
-  row["Name"].squeeze!(" ")
+  row["Name"].squeeze!(" ") # remove excessive space within strings
 
   if row["Amount"].start_with?("-")
     row["Amount"] = row["Amount"][1..-1]
   end
+
+  row["Amount"] = row["Amount"].gsub(',', '.').to_f.round(1)
 end
 
 def parse_date(row, rows)
