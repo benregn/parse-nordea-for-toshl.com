@@ -2,6 +2,7 @@
 # encoding: utf-8
 require 'CSV'
 require 'json'
+require 'date'
 require "formatador"
 
 #=========================================#
@@ -17,7 +18,7 @@ def prepare_CSV
   columns_to_remove = ["Bogført", "Rentedato", "Saldo"]
   switch_keys = { "Tekst" => "Name", "Beløb" => "Amount" }
 
-  CSV.foreach("./nordeaOLD.csv", col_sep: ';', headers: true) do |row|
+  CSV.foreach("./nordea.csv", col_sep: ';', headers: true) do |row|
     row = change_key_name row, switch_keys
 
     if row["Name"].match("Den")
@@ -65,6 +66,7 @@ def parse_date(row, rows)
   end
 
   row["Name"] = row["Name"][0..index-1].rstrip!
+  date = Date.strptime(date, "%d.%m")
   row.merge!("Date" => date)
 end
 
@@ -89,5 +91,6 @@ rows.each do |row|
   parse_date row, rows
   match_tags filename, row
 end
-# puts rows
+rows.sort_by! { |hash| hash["Date"] }
+# p rows
 Formatador.display_table rows, ["Amount", "Tag", "Date", "Name"]
