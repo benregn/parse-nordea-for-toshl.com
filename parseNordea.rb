@@ -49,6 +49,8 @@ def cleanup_data(row)
     row["Name"] = row["Name"][3..-1]
   end
 
+  row["Name"].squeeze!(" ")
+
   if row["Amount"].start_with?("-")
     row["Amount"] = row["Amount"][1..-1]
   end
