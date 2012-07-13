@@ -21,7 +21,7 @@ module Nordea
     CSV.foreach("./nordea.csv", col_sep: ';', headers: true) do |row|
       row = Helpers.change_key_name row, switch_keys
 
-      if row["Name"].match("Den")
+      if row["Name"].match("Den") && row["Name"].match("køb")
         columns_to_remove.each do |column|
           row.delete column
         end
