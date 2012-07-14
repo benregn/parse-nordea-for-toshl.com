@@ -13,23 +13,27 @@ require "./helpers"
 # (optionally the time as well), and the amount
 # After that maybe assign specific tags
 module Nordea
+  @filenames = ["nordea_sandra.csv"]
+
   def self.prepare_CSV
     rows = []
     columns_to_remove = ["Bogført", "Rentedato", "Saldo"]
     switch_keys = { "Tekst" => "Name", "Beløb" => "Amount" }
 
-    CSV.foreach("./nordea.csv", col_sep: ';', headers: true) do |row|
-      row = Helpers.change_key_name row, switch_keys
+    @filenames.each do |filename|
+      CSV.foreach(filename, col_sep: ';', headers: true) do |row|
+        row = Helpers.change_key_name row, switch_keys
 
-      if row["Name"].match("Den") && row["Name"].match("køb")
-        columns_to_remove.each do |column|
-          row.delete column
+        if row["Name"].match("Den") && row["Name"].match("køb")
+          columns_to_remove.each do |column|
+            row.delete column
+          end
+
+          row = row.to_hash
+          rows.push row
+        else
+          # No dates, no interest
         end
-
-        row = row.to_hash
-        rows.push row
-      else
-        # No dates, no interest
       end
     end
     return rows
